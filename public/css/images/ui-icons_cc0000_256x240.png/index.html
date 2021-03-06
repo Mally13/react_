@@ -1,0 +1,561 @@
+<!-- Set the site root for javascript in _Layout.cshtml.-->
+    <script>
+        window.siteRoot = "https" + "://" + "www.crystaltravel.co.uk";
+    </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+            <meta name="robots" content="noindex, nofollow">
+
+
+
+    
+
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="#destination-image-url#">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="CrystalTravel">
+    <meta name="twitter:image" content="#destination-image-url#">
+    <!-- Static Meta Tags for Home Page End-->
+
+    
+        <link href="../../main.min_v%3D3lwlhFRaPXqFkvxoy6emmZI_25-tDDOxE0XIb7_Aqnk.css" rel="stylesheet">
+        <script src="../../../js/main.min_v%3Dkd926tC4q661_NiyKa7i6g3WjGES0nKRT6srlP2sxQQ.js"></script>
+    
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script type="text/javascript" src="../../../js/CurrencyCommon.js"></script>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5NKV6P');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body ng-app="currencyApp" ng-controller="CurrencyRate">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NKV6P" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+
+<header class="toppanel" id="myHeader">
+    <div class="container-fluid pad-lr30 pad-lr30-m">
+        <nav class="navbar navbar-expand-lg mb-2">
+            <a class="logo navbar-brand" href="../../../">
+                <img src="../../../images/logo-blue1.png" class="img-fluid desklogo">
+                <img src="../../../images/logo-mobile.png" class="mob-logo img-fluid">
+
+            </a>
+
+            <div class="call-now-m2 d-block d-xl-none d-lg-none top-coc768">
+                <span> <a href="tel:0207 612 0500">  <img src="../../../images/call-m.png"> </a></span>
+                <span><a href="../../../customer-support/"><img src="../../../images/support-m.png"> </a></span>
+
+            </div>
+            <button class="navbar-toggler close-menu-hide" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="mobileMenu"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <div class="mob-show-menu">
+                    <div class="float-left">
+                        Menu
+                    </div>
+                    <div class="float-right close-menu">
+                        <span class="close-btn-icon close-menu"></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="stick-srch"></div>
+
+
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block">
+                    <div class="customer-support-top">
+                        <a href="../../../customer-support/">
+                            <img src="../../../images/Customer-Support-top.png">
+                            <span>Customer support </span>
+                        </a>
+
+                    </div>
+                </li>
+                <li class="nav-item d-sm-block d-xl-block d-lg-block">
+
+                    <ul class="nav navbar-nav navbar-right" style="display:block;">
+
+                            <li>
+                                <div class="log-toggle sng-btn" style="display:none;">
+                                    <p class="ls_desk">Login/Signup</p>
+                                    <span class="text_sign d-none d-sm-none d-lg-block">
+                                        <span class="sign-icon"></span>
+                                        <span id="sign">
+                                            <i class="fa fa-angle-down bar-ioc"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </li>
+                    </ul>
+                    <div class="sign-in-up">
+
+<form id="userRegistration" method="post">
+    <div class="sign-up-main" style="display: none;">
+        <div class="sin-close" onclick="Showdiv()"><i class="fa fa-close"></i></div><div class="sin-close"><i class="fa fa-close"></i></div>
+        <div class="sin-close sin-close-sec"><i class="fa fa-close"></i></div>
+        <div class="sin-form">
+            <div class="sign-titl">Create an account</div>
+            <div class="new-account">Already have an account?  <a href="#" class="log-show">Sign In</a></div>
+            <div class="title-select">
+                <label>Title <span> *</span></label>
+                <div class="title-tab"><a class="ttab-active">Mr.</a><a>Ms</a><a>Mrs</a><a>Miss</a><a>Dr</a></div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-6 pr-0">
+                        <label>First Name<span> *</span></label>
+                        <input class="s-txt" placeholder="Enter First Name" id="txtname" name="txtname" spellcheck="false" maxlength="25">
+                        <span class="vd" id="spnfirstNameErrorMessage"></span>
+                    </div>
+                    <div class="col-6">
+                        <span class="vd" id="nm"></span>
+                        <label>Last Name<span> *</span></label>
+                        <input class="s-txt" placeholder="Enter Last Name" id="txtlastname" name="txtlastname" spellcheck="false" maxlength="25">
+                        <span class="vd" id="spnLastNameErrorMessage"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="vd" id="nm1"></span>
+                <label>Email<span> *</span></label>
+                <input class="s-txt" type="email" placeholder="Enter Email" id="txtemail" name="txtemail" onchange="checkmail(this.value);" spellcheck="false">
+                <span class="vd" id="spnEmailIdErrorMessage"></span>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4 pr-0">
+                        <div class="elem-control">
+                            <label>Phone number<span> *</span></label>
+                            <div class="input-group">
+                                <input type="tel" id="countrycode" name="countrycode" class="text-type-passenger phon" value="+44">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <label>&nbsp;</label>
+                        <input class="s-txt" type="text" placeholder="Phone number" id="txtPhoneNumber" name="txtPhoneNumber" maxlength="15" onkeypress="return phonenumber(this.value);">
+                        <span class="vd" id="spnPhoneErrorMessage"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-6 pr-0">
+                        <label>Gender<span> *</span></label>
+                        <select id="ddlGender" class="form-control s-txt">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Trans">Trans</option>
+                        </select>
+                        <span class="vd" id="spnGenderErrorMessage"></span>
+                    </div>
+                    <div class="col-6">
+                        <div class="elem-control">
+                            <label>Date of Birth<span> *</span></label>
+                            <div class="input-group" id="div-dob">
+
+                                <input type="text" value="Enter Date of Birth" class="s-txt" placeholder="Enter Date of Birth" id="txtUserRegistrationDOB" name="txtUserRegistrationDOB" readonly="readonly">
+                                <span class="vd" id="spnDOBErrorMessage"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="vd" id="phn"></div>
+                <label>Password<span> *</span></label>
+                <input class="s-txt" type="password" placeholder="Enter Password" id="txtpassword" name="txtpassword" maxlength="25">
+                <span class="vd" id="spnPasswordErrorMessage"></span>
+            </div>
+            <div class="form-group">
+                <div onclick="chkagree()">
+                    <input type="checkbox" class="check_box" id="chktc"> <label class="check_box">I agree <span> *</span><a href="../../../Home/TermsAndConditions/" target="_blank">T&amp;C</a></label>
+                    <span class="vd" id="spnAgreeErrorMessage"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input id="registerUserWithCheckvalidate" type="button" class="btn_yellow" value="Create an Account">
+                <span class="vd" id="crt"></span>
+            </div>
+        </div>
+    </div>
+<input name="__RequestVerificationToken" type="hidden" value="CfDJ8CYv6_8YqkxPqsw2-T5-nrYHFdxtXGz38J3nsv6qFYkrVs0UXbDni-pN8ZFc794ryw-KB9jkBHAee7Llwu5O-NwAlvo9FxjvRN6ByBPAG6Hv3oqR0PNhdG3-ZfcFQBrG2xp27uoZHOEQQ57MVrSvyco"></form>
+
+
+<div class="sign-in-main">
+    <div class="sin-close" onclick="Showdiv()"><i class="fa fa-close"></i></div>
+    <div class="sin-form">
+        <div class="sign-titl">Login/Signup </div>
+
+        <div class="form-group log-hide">
+            <div class="log-sin-label">Login/Signup with Email</div>
+            <input type="email" placeholder="Enter Email" id="txtLoginEmail" spellcheck="false" class="s-txt" onchange="checkLoginMail(this.value);">
+            <span class="vd" id="spnLoginEmailErrorMessage"></span>
+        </div>
+        <div class="form-group logg-continue">
+            <input type="button" class="btn_yellow" value="Continue" id="btnemail">
+        </div>
+        <div class="form-group pswd-btn">
+            <div class="vd" id="phn1"></div>
+            <label>Password</label>
+            <input type="password" placeholder="Enter Password" id="txtLoginPassword" spellcheck="false" maxlength="25" class="s-txt">
+            <span class="vd" id="spnLoginPasswordErrorMessage"></span>
+        </div>
+        <div class="form-group pswd-btn">
+            <input id="btnUserLoginWithCheckLogin" type="button" class="btn_yellow" value="Continue">
+        </div>
+
+        <div class="sign-tc">
+            By proceeding, you agree to Crystal Travel <a href="../../../Home/PrivacyPolicy/" target="_blank">Privacy Policy</a>,
+            <a href="#"> User Agreement</a> and <a href="../../../Home/TermsAndConditions/" target="_blank">T&Cs</a>
+        </div>
+        <div class="new-account">New user? <a href="#" class="signup-show">Create an account</a></div>
+    </div>
+</div>
+
+                    </div>
+                    <div class="login_top_open" id="login_top_open1">
+                        <div id="forgot" class="log_box_top" style="display:none;">
+                            <div id="fb-root"></div>
+                            <label>Email</label>
+                            <input type="email" placeholder="Enter Email" id="txtforgotemail" onchange="checkmail2(this.value);" spellcheck="false">
+                            <div class="clearfix"></div>
+                            <div style="color:red;" id="phnn"></div>
+                            <input type="button" class="btn_yellow" value="Back" onclick="showuser('Login')" style="width:48%">
+                            <input type="button" class="btn_yellow pull-right" value="Submit" onclick="CheckForgot()" style="width:48%">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="login_top_open" id="myaccount_open">
+                        <div id="logindata" class="menu_box_top" style="display:block;">
+                            <ul class>
+                                <li><a href="../../../common/myprofile/">My Profile</a></li>
+                                <li><a href="../../../common/myprofile/">My Bookings</a></li>
+                                <li><a href="../../../reviews/">Reviews</a></li>
+                                <li><a href="../../../faq/">FAQ</a></li>
+                                <li><a onclick="logout()">Sign out</a></li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown d-block d-xl-none d-lg-none">
+                   
+
+
+                    </li>
+                    <li class="nav-item dropdown d-block d-xl-none d-lg-none">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Who We Are
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="../../../AboutUs/">About Us</a>
+                            <a class="dropdown-item" href="../../../customer-support/">Customer Support</a>
+                            <a class="dropdown-item" href="https://blog.crystaltravel.co.uk">Blog</a>
+                            <a class="dropdown-item" href="../../../Sitemap/">Sitemap</a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown d-block d-xl-none d-lg-none">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Support
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="../../../FAQ/">FAQ</a>
+                            <a class="dropdown-item" href="../../../PrivacyPolicy/">Privacy Policy</a>
+                            <a class="dropdown-item" href="../../../TermsAndConditions/">Terms &amp; Condtions</a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown d-block d-xl-none d-lg-none">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Important Information
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" target="_blank" href="../../../Certify/ESTA-Fact-Sheet.pdf">ESTA Fact Sheet</a>
+                            <a class="dropdown-item" target="_blank" href="../../../Certify/ATOL-Certificate.pdf">ATOL Certificate</a>
+                            <a class="dropdown-item" target="_blank" href="../../../Certify/IATA.pdf">IATA Certificate</a>
+                            <a class="dropdown-item" target="_blank" href="../../../Certify/ABTA-Certificate.pdf">ABTA Certificate</a>
+                            <a rel="nofollow" class="dropdown-item" target="_blank" href="https://www.gov.uk/foreign-travel-advice">
+                                Government Travel Advice
+                                <a class="dropdown-item" href="../../../Home/cookiespolicy/">Cookies Policy</a>
+                        </a></div>
+                    </li>
+
+                    <li class="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block"> <div class="topSearch"></div> </li>
+
+                    <li class="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block">
+                        <div class="call-now">
+                            <img src="../../../images/call-ioc.png">
+                            <span>Book Online or Call us 24/7</span>
+                            <p><a href="tel:0207 612 0500"> 0207 612 0500</a></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<script>
+    $(document).scroll(function () {
+        var y = $(this).scrollTop();
+        if (y > 50) {
+            $('.topSearch').fadeIn();
+        } else {
+            $('.topSearch').fadeOut();
+        }
+
+    });
+    $(document).ready(function () {
+        $('.topSearch').on('click', function () {
+            $('#txtOrigin').focus();
+
+        });
+    });
+</script>
+<style type="text/css">
+    .topSearch {
+        display: none;
+        position: fixed;
+        top: 15px;
+        left: 35%;
+        width: 100%;
+        height: 60px;
+        background-image: url(../../../images/flight-top-scroll.jpg);
+        background-repeat: no-repeat;
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    .sticky {
+        position: fixed;
+        transition: 0.5s;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0px 13px 49px 0px rgba(12, 6, 14, 0.14);
+        -webkit-box-shadow: 0px 13px 49px 0px rgba(12, 6, 14, 0.14);
+        -moz-box-shadow: 0px 13px 49px 0px rgba(12, 6, 14, 0.14);
+        margin: 0px;
+        padding: 20px 0px;
+    }
+
+        .sticky + .customer-support {
+            padding-top: 150px;
+        }
+
+    .trust-feefo-slider {
+        display: flex;
+        position: relative;
+        top: -80px;
+    }
+</style>
+<script>
+    window.onscroll = function () { myFunction() };
+
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+</script>
+<script src="../../../js/intlTelInput.js"></script>
+<script src="../../../js/FlightCommon.js"></script>
+
+
+
+    
+
+<div class="payment-decline">
+    <img src="../../../images/404-img.png">
+    <strong>Page Not Found</strong>
+    <p>
+        When communicating via HTTP, a server is required to respond to a request, such as a web browser
+        <br>request for a web page, with a numeric response code and an optional, mandatory, or disallowed.
+    </p>
+    <a href="../../../">Search Again</a>
+</div>
+
+
+
+<footer>
+    <div class="footer-links">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-3 col-md-12 col-sm-12 d-none d-xl-block d-lg-block align-self-center">
+                        <img src="../../../images/logo-blue-footer.png" class="img-fluid" alt="logo">
+                    </div>
+                    <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12 align-self-center">
+                        <div class="location">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> 10-11 Percy St, Fitzrovia, London W1T 1DN, United Kingdom <span>
+                                <a href="tel:0207 612 0500">
+                                    <img src="../../../images/call-ioc.png" class="img-fluid" alt="call"> 0207 612 0500
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row footer-spacer justify-content-between">
+                <!--<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 d-none d-md-block d-xl-block d-lg-block">
+                    <div class="heading">Flights</div>
+                    <div class="pt-3">
+                        <ul>
+                            <li><a href="javascript:void(0);">Home</a></li>
+                            <li><a href="javascript:void(0);">Flights</a></li>-->
+                            <!--<li><a href="javascript:void(0);">Holidays</a></li>
+                            <li><a href="javascript:void(0);">Airlines</a></li>
+                            <li><a href="javascript:void(0);">Travel Talks</a></li>
+                            <li><a href="javascript:void(0);">Special Offers</a></li>
+                            <li><a href="javascript:void(0);">Tours</a></li>
+                        </ul>
+                    </div>
+                </div>-->
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 d-none d-md-block d-xl-block d-lg-block">
+                    <div class="heading">Important Information</div>
+                    <div class="pt-3">
+                        <ul>
+                            <li><a target="_blank" href="../../../Certify/ESTA-Fact-Sheet.pdf">ESTA Fact Sheet</a></li>
+                                <li><a target="_blank" href="../../../Certify/ATOL-Certificate.pdf">ATOL Certificate</a></li>
+                                <li><a target="_blank" href="../../../Certify/IATA.pdf">IATA Certificate</a></li>
+                                <li><a target="_blank" href="../../../Certify/ABTA-Certificate.pdf">ABTA Certificate</a></li>
+                                <li><a rel="nofollow" target="_blank" href="https://www.gov.uk/foreign-travel-advice">Government Travel Advice</a></li>
+                                <li><a href="../../../Home/cookiespolicy/">Cookies Policy</a></li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 d-none d-md-block d-xl-block d-lg-block">
+                    <div class="heading">Who We Are</div>
+                    <div class="pt-3">
+                        <ul>
+                            <li><a href="../../../AboutUs/">About us</a></li>
+                            <li><a href="../../../customer-support/">Customer Support</a></li>
+<li><a target="_blank" href="https://blog.crystaltravel.co.uk">Blog</a></li>
+                             <li><a href="../../../Sitemap/">Sitemap</a></li>
+                            
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 d-none d-md-block d-xl-block d-lg-block">
+                    <div class="heading">Support</div>
+                    <div class="pt-3">
+                        <ul>
+                            <li><a href="../../../FAQ/">FAQ</a></li>
+                            <li><a href="../../../PrivacyPolicy/">Privacy Policy</a></li>
+                            <li><a href="../../../TermsAndConditions/">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="client-logo-sec pt-1 pb-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ul>
+                        <li><a class="abta"></a></li>
+                        <li><a class="iata"></a></li>
+                        <li><a class="atol"></a></li>
+                        <li><a class="geotrust"></a></li>
+                        <li><a class="advantage"></a></li>
+                        <li><a class="master-card"></a></li>
+                        <li><a class="vvisacard"></a></li>
+                        <li><a rel="nofollow" href="//www.dmca.com/Protection/Status.aspx?ID=938a781d-5084-4d36-9b26-1e20c4a7c627" target="_blank" title="DMCA.com Protection Status" class="dmca-badge dmca"> </a></li>
+                        <li> <span class="we-accepted">  We Accept</span> </li>
+                        <li> <a class="card-accepted"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="copyright">
+                            <p class="f10 pt-2 pb-2 mb-0">
+                                <b>
+                                    © 2020-2021 Moresand Ltd.(Reg No.02114691) T/A CrystalTravel registered in
+                                    England and Wales.Head Office, 10-11 Percy St, Fitzrovia, London W1T 1DN, United Kingdom.
+                                </b>
+                            </p>
+                            <p class="f10">
+                                Many of the flights and flight-inclusive holidays on this website are financially protected
+                                by the ATOL scheme. But ATOL protection does not apply to all holiday and travel services listed on this
+                                website. Please ask us to confirm what protection may apply to your booking. If you do not receive an ATOL
+                                Certificate then the booking will not be ATOL protected. If you do receive an ATOL Certificate but all the
+                                parts of your trip are not listed on it, those parts will not be ATOL protected. If you have booked a
+                                flight only where the ticket is not issued immediately, your flight will be protected under our ATOL.
+                                Please see our booking conditions for information, or for more information about financial protection and
+                                the ATOL Certificate go to <a href="http://www.atol.org.uk/ATOLCertificate" rel="nofollow">www.atol.org.uk/ATOLCertificate</a>
+                            </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    
+    <input type="hidden" id="hdnCultureCode" name="hdnCultureCode" value="en-GB">
+</body>
+</html>
+
+<script type="text/javascript" src="https://app.responseiq.com/widgetsrc.php?widget=X1KYJ8RI10P1XKEHM6P&amp;widgetrnd=Math.random();"></script>
+
+<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+
+<script>
+    function initFreshChat() {
+        window.fcWidget.init({
+            "config": {
+                "cssNames": {
+                    "widget": "chatopen",
+                    "expanded": "chatopennew"
+                }
+            },
+            token: "735d9b0d-7e84-4772-bcb6-3aa9d2149602",
+            host: "https://wchat.freshchat.com",
+            open: false,
+        });
+    }
+    function initialize(i, t) { var e; i.getElementById(t) ? initFreshChat() : ((e = i.createElement("script")).id = t, e.async = !0, e.src = "https://wchat.freshchat.com/js/widget.js", e.onload = initFreshChat, i.head.appendChild(e)) } function initiateCall() { setTimeout(() => { initialize(document, "freshchat-js-sdk") }, 0) } window.addEventListener ? window.addEventListener("load", initiateCall, !1) : window.attachEvent("load", initiateCall, !1);
+</script>
+
+
+<script type="text/javascript">
+    var _mfq = _mfq || [];
+    (function () {
+        var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true;
+        mf.src = "//cdn.mouseflow.com/projects/b937c8a8-3066-42fc-bc1e-e43d3e2871b6.js";
+        document.getElementsByTagName("head")[0].appendChild(mf);
+    })();
+</script>
