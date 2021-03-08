@@ -77,7 +77,7 @@ class Hotels extends Component {
                                             </div>
                                 </div>
                                 <div className="hotel-form-4">
-                                    <input className="serch-botton" type="submit" onclick="searchReq(event)"value/>
+                                    <input className="serch-botton" type="submit" /*onClick={searchReq(Event)}*/ value/>
                                     <input type="hidden" name="hdnSearchRequest" id="hdnSearchRequest"/> 
                                 </div>
                                 <div className="travlerr-data pop-size" id="DivhotelPopData" style={{display:"none"}}>

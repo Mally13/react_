@@ -166,7 +166,7 @@ class Cars extends Component {
                         
 
                         <div className="flying-from-4">
-                            <input className="serch-botton" type="submit" onclick="searchReq(event)"value/>
+                            <input className="serch-botton" type="submit" /*onClick={searchReq(Event)}*/  value/>
                             <input type="hidden" name="hdnSearchRequest" id="hdnSearchRequest"/>                                    
                         </div>
 

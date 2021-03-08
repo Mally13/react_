@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import IntlTelInput from 'react-intl-tel-input';
-import $ from "jquery";
+import $, { event,click } from "jquery";
 import 'react-intl-tel-input/dist/main.css';
 import 'react-intl-tel-input/dist/components/utils';
 import axios from 'axios'
@@ -34,14 +34,7 @@ class Signin_up extends Component {
           this.resetUserLogin = this.resetUserLogin.bind(this);
           this.resetCreateAccount = this.resetCreateAccount.bind(this);
           this.userLoginWithCheckLogin = this.userLoginWithCheckLogin.bind(this);
-          this.registerUserWithCheckvalidate=this.registerUserWithCheckvalidate.bind(this);
-        //   this.resetCreateAccount = this.resetCreateAccount.bind(this);
-    
-    
-    
-        //   this.onPhoneNumberChange=this.onPhoneNumberChange.bind(this);
-    
-        
+
     
         }
 
@@ -59,13 +52,14 @@ $(".navbar-toggler").click(function (e) {
 //login sign up popup
 $(".logg-continue").click(function () {
     
-    if ($.trim($("#txtLoginEmail").val()).length == 0) {
+    if ($.trim(_.state.txtLoginEmail).length == 0) {
         $("#spnLoginEmailErrorMessage").html('Enter emailId');
         $("#txtLoginEmail").css("border-color", "red");
         return false;
     }
     else {
-        if ( _.checkLoginMail($.trim($("#txtLoginEmail").val())) == false) {
+        
+        if ( _.checkLoginMail($.trim(_.state.txtLoginEmail)) == false) {
             $("#spnLoginEmailErrorMessage").html('Please Enter a valid email!');
             $("#txtLoginEmail").css("border-color", "red");
         }
@@ -74,7 +68,7 @@ $(".logg-continue").click(function () {
                 $(".log-hide").hide();
                 $(".pswd-btn").show();
               }
-             }
+         }
 });
 $(".log-toggle").click(function () {
     $(".acc-toggle").slideToggle();
@@ -124,11 +118,18 @@ $(".log-toggle").click(function () {
     $(".title-tab a").removeClass("ttab-active");
     $(this).addClass("ttab-active");
   });
+  $("#isCorporate").on('change', function() {
+    if ($(this).is(':checked')) {
+      $(this).attr('value', 'true');
+    } else {
+      $(this).attr('value', 'false');
+    }
+});
 
-this.resetCreateAccount();
-this.resetUserLogin();
-this.userLoginWithCheckLogin();
-this.registerUserWithCheckvalidate();
+// this.resetCreateAccount();
+// this.resetUserLogin();
+// this.userLoginWithCheckLogin();
+// this.registerUserWithCheckvalidate(e);
 }
 
 
@@ -142,25 +143,23 @@ this.registerUserWithCheckvalidate();
   }
 
 
-  registerUserWithCheckvalidate=()=> {
-    // e.preventDefault();
+registerUserWithCheckvalidate=(e)=> {
+var _=this;
+    e.preventDefault();
     this.setState({
-        txtLoginEmail:'',
-        txtLoginPassword:'',
-        // title: '',
+        title: '',
         txtname: '',
         txtlastname: '',
         isCorporate:'',
-        txtemail: '',
-        number:'',
+        txtemail: '',      
+        txtPhoneNumber:'',
         ddlGender: '',
         txtUserRegistrationDOB: '',
         txtpassword: '' 
     }); 
-    var _=this;
-    $("#registerUserWithCheckvalidate").click(function () {
-        
-        let errorCount = 0;
+
+
+    let errorCount = 0;
 
         if ($.trim($("#txtname").val()).length == 0) {
             $("#spnfirstNameErrorMessage").html('Enter first name');
@@ -184,13 +183,13 @@ this.registerUserWithCheckvalidate();
         }
 
 
-        if ($.trim($("#txtPhoneNumber").number()).length == 0) {
+        if ($.trim($("#txtPhoneNumber").val()).length == 0) {
             $("#spnPhoneErrorMessage").html('Enter phone number');
             $("#txtPhoneNumber").css('border-color', 'red');
             errorCount++;
         }
 
-        if ($.trim($("#txtPhoneNumber").number()) == false) {
+        if ($.trim($("#txtPhoneNumber").val()) == false) {
            $("#spnPhoneErrorMessage").html('Enter valid phone number');
            $("#txtPhoneNumber").css('border-color', 'red');
            errorCount++;
@@ -241,18 +240,34 @@ this.registerUserWithCheckvalidate();
         if (errorCount > 0) {
             return false;
         }
+        
+        let model={
+    'title':$(".ttab-active").text(),
+    'firstName': _.state.txtname,
+    'lastName':_.state.txtname,
+    'phone':_.state.txtPhoneNumber,
+    'email':_.state.txtemail,
+    'password':_.state.txtpassword,
+    'gender':_.state.ddlGender,
+    'dob':_.state.txtUserRegistrationDOB,
+   'isCorporate':_.state.isCorporate
+
+        }
+        console.log(model)
 
     let regformData = new FormData();
+    
    
-    regformData.append('title',$(".ttab-active").text());
-    regformData.append('firstName', _.state.txtname);
-    regformData.append('lastName',_.state.txtlastname);
-    regformData.append('phone',_.state.txtPhoneNumber);
-    regformData.append('email', _.state.txtemail);
-    regformData.append('password', _.state.txtpassword);
-    regformData.append('gender', _.state.ddlGender);
-    regformData.append('dob', _.state.txtUserRegistrationDOB);
-    regformData.append('isCorporate',_.this.state.isCorporate);
+    regformData.append('title',$(".ttab-active").text())
+    regformData.append('firstName', _.state.txtname)
+    regformData.append('lastName',_.state.txtname)
+    regformData.append('phone',_.state.txtPhoneNumber)
+    regformData.append('email',_.state.txtemail)
+    regformData.append('password',_.state.txtpassword);
+    regformData.append('gender',_.state.ddlGender)
+    regformData.append('dob',_.state.txtUserRegistrationDOB)
+    regformData.append('isCorporate',$("#isCorporate").val())
+    // regformData.append( 'countryCode',_.state.txtPhoneNumber.dialCode)
 
     console.log(regformData);
 
@@ -267,10 +282,10 @@ this.registerUserWithCheckvalidate();
           }
       };
       axios(configSignUp)
-      .then(function (data,status,xhr) {
-        // document.getElementById("response").innerHTML = JSON.stringify(response.data);
-        if(data != null && data != undefined && data.IsOperationSuccess == true) {
-            if (data.Status.message == "OK") {
+      .then(function (response) {
+        // document.getElementById("response").innerHTML = JSON.stringify(response);
+        if(response != null ) {
+            if (response.status == "success") {
                alert("User registration successfull!");
                 $(".sign-in-up").fadeOut();
 
@@ -292,13 +307,12 @@ this.registerUserWithCheckvalidate();
                   };
    
                   axios(configSignIn)
-                  .then(function (data,status,xhr) {
-                      console.log(data)
-                    // document.getElementById("response").innerHTML = JSON.stringify(response.data);
-                    if (data != null && data != "0") {
+                  .then(function (response) {
+                   document.getElementById("response").innerHTML = JSON.stringify(response.data);
+                   if (response.status="success") {
                         _.resetUserLogin();
                         _.resetCreateAccount();
-                        alert("Login successfully");
+                        alert("Login successful");
                         $(".sin-close").click();
                         $(".sin-close-sec").click();
                         window.location.reload();
@@ -310,9 +324,9 @@ this.registerUserWithCheckvalidate();
                     // manipulate the error response here
                     alert("Error!" + xhr.status);
                 });
-                        }
+            }
             else {
-                alert(data.Status.message);
+                alert(response.status);
             }
         }
         else {
@@ -323,27 +337,32 @@ this.registerUserWithCheckvalidate();
         // manipulate the error response here
         alert("Error!" + xhr.status);
     })
-})
-  }
+
+}
   
 userLoginWithCheckLogin=()=> {
+    this.setState({
+        txtLoginEmail:'',
+        txtLoginPassword:'',
+    })
     var _=this;
-
+    $("#btnUserLoginWithCheckLogin").click(function () {
+        
         let errorCount = 0;
       
-        if ($.trim($("#txtLoginEmail").val()).length == 0) {
-            $("#spnLoginEmailErrorMessage").html('Enter emailId');
+        if ($.trim(_.state.txtLoginEmail).length == 0) {
+            $("#spnLoginEmailErrorMessage").html('Enter email Id');
             $("#txtLoginEmail").css('border-color', 'red');
             errorCount++;
         }
-        if ($.trim($("#txtLoginPassword").val()).length == 0) {
+        if ($.trim(_.state.txtLoginPassword).length == 0) {
             $("#spnLoginPasswordErrorMessage").html('Enter password');
             $("#txtLoginPassword").css('border-color', 'red');
             errorCount++;
         }
 
-        if ($.trim($("#txtLoginEmail").val()).length > 0) {
-            if (_.checkLoginMail($.trim($("#txtLoginEmail").val())) == false) {
+        if ($.trim(_.state.txtLoginEmail).length > 0) {
+            if (_.checkLoginMail($.trim(_.txtLoginEmail)) == false) {
                 errorCount++;
             }
         }
@@ -361,7 +380,7 @@ userLoginWithCheckLogin=()=> {
 
         let loginformData = new FormData();
 
-        loginformData.append("email", _.state.txtLoginEmail);
+        loginformData.append("email",_.state.txtLoginEmail);
         loginformData.append("password", _.state.txtLoginPassword);
         
         console.log(loginformData)
@@ -376,10 +395,9 @@ userLoginWithCheckLogin=()=> {
           };
 
           axios(configSignIn)
-          .then(function (data,status,xhr) {
-              console.log(data)
-            // document.getElementById("response").innerHTML = JSON.stringify(response.data);
-            if (data != null && data != "0") {
+          .then(function (response,status,xhr) {
+            // document.getElementById("response").innerHTML = JSON.stringify(response);
+            if (response.status="success") {
                 _.resetUserLogin();
                 _.resetCreateAccount();
                 alert("Login successfully");
@@ -394,10 +412,15 @@ userLoginWithCheckLogin=()=> {
             // manipulate the error response here
             alert("Error!" + xhr.status);
         });
-    }
-   
+        return true;
+        }
+    
+    
+    });
+
 }
-  
+
+
 
 checkmail=(email)=>  {
     var emailReg = new RegExp(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i);
@@ -502,16 +525,15 @@ render() {
                 <div className="col-6">
                     <span className="vd" id="nm"></span>
                     <label>Last Name<span> *</span></label>
-                    <input className="s-txt" placeholder="Enter Last Name" id="txtlastname" name="txtlastname" spellcheck="false" maxlength="25"value={this.state. txtlastname} onChange={this._handleChange}/>
+                    <input className="s-txt" placeholder="Enter Last Name" id="txtlastname" name="txtlastname" spellcheck="false" maxlength="25"value={this.state.txtlastname} onChange={this._handleChange}/>
                     <span className="vd" id="spnLastNameErrorMessage"></span>
                 </div>
                 </div>
                 </div>
 
                 <div className="form-group">
-                {/* <div onClick="chkagree()"> */}
                 <label>Service Type</label>
-                <input type="checkbox" className="check_box" name="isCorporate"value={this.state.isCorporate} onChange={this._handleChange}/> 
+                <input type="checkbox" className="isCorporate" name="isCorporate" id="isCorporate" value={this.state.isCorporate} onChange={this._handleChange}/> 
                 <label className="check_box"style={{width:"90%",float:"right"}}>Please select if you are a corporate</label>
                 <span className="vd" id="spnAgreeErrorMessage"></span>
                 </div>
@@ -520,7 +542,7 @@ render() {
                 <span className="vd" id="nm1"></span>
                 <label>Email<span> *</span><br/>
                 <span style={{color:"#02b7a4"}}> Please use a business email for corporate service</span></label>
-                <input className="s-txt" type="email" placeholder="Enter Email" id="txtemail" name="txtemail" spellcheck="false"value={this.state.txtemail} onChange={this._handleChange}/>
+                <input className="s-txt" type="email" placeholder="Enter Email" id="txtemail" name="txtemail" spellCheck="false" value={this.state.txtemail} onChange={this._handleChange}/>
                 <span className="vd" id="spnEmailIdErrorMessage"></span>
                 </div>
 
@@ -528,32 +550,32 @@ render() {
                 <div className="form-group">
                             <label>Phone number<span> *</span></label>
                             <div className="input-group">
-                            <IntlTelInput
-                            
+                        <IntlTelInput
+                            inputClassName="txtPhoneNumber"
+                            preferredCountries={['ng','ke','gb']}
+                            css={['intl-tel-input', 'form-control']}
+                            utilsScript={'utils.js'}
+                            fieldId="txtPhoneNumber"
+                            fieldName="txtPhoneNumber"
 
-          inputClassName="txtPhoneNumber"
-          preferredCountries={['ng','ke','gb']}
-          css={['intl-tel-input', 'form-control']}
-          utilsScript={'libphonenumber.js'}
-          fieldId="txtPhoneNumber"
-          fieldName="txtPhoneNumber"
+                            onSelectFlag={(num, country) => {
+                                console.log('onSelectFlag', num, country);
+                            }}
+                            onPhoneNumberChange={(status, value, countryData, number, id) => {
+                                
+                                console.log('onPhoneNumberChange value', value);
+                                console.log('onPhoneNumberChange number', number);
+                                this.setState({txtPhoneNumber:number})
 
-          onSelectFlag={(num, country) => {
-            console.log('onSelectFlag', num, country);
-          }}
-          onPhoneNumberChange={(status, value, countryData, number, id) => {
-            this.setState({txtPhoneNumber:number})
-            console.log('onPhoneNumberChange value', value);
-            console.log('onPhoneNumberChange number', number);
-          }}
-          onPhoneNumberBlur={(status, value, countryData, number, id) => {
-            console.log('onPhoneNumberBlur value', value);
-            console.log('onPhoneNumberBlur number', number);
-          }}
-        format
-        formatOnInit={false} 
-        //  separateDialCode
-        />
+                            }}
+                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
+                                console.log('onPhoneNumberBlur value', value);
+                                console.log('onPhoneNumberBlur number', number);
+                            }}
+                            format
+                            formatOnInit={false} 
+                            //  separateDialCode
+                            />
  <span className="vd" id="spnPhoneErrorMessage"></span>
                  
          
@@ -587,7 +609,7 @@ render() {
                 <div className="form-group">
                 <div className="vd" id="phn"></div>
                 <label>Password<span> *</span></label>
-                <input className="s-txt" type="password" placeholder="Enter Password" id="txtpassword" name="txtpassword" maxlength="25"value={this.state.txtpassword} onChange={this._handleChange}/>
+                <input className="s-txt" type="password" placeholder="Enter Password" id="txtpassword" name="txtpassword" maxlength="25"  value={this.state.txtpassword} onChange={this._handleChange}/>
                 <span className="vd" id="spnPasswordErrorMessage"></span>
                 </div>
                 <div className="form-group">
@@ -605,29 +627,27 @@ render() {
                 </form>
 
 
-                
+               
                 <div className="sign-in-main">
-
                 <div className="sin-close" onClick="Showdiv()"><i className="fa fa-close"></i></div>
                 <div className="sin-form">
+                <form id="userLogin" onSubmit={this.userLoginWithCheckLogin}>
                 <div className="sign-titl">Login/Signup </div>
                 <div className="form-group log-hide">
                 <div className="log-sin-label">Login/Signup with Email</div>
                 <input type="email" placeholder="Enter Email" id="txtLoginEmail" name="txtLoginEmail" spellcheck="false" className="s-txt"  value={this.state.txtLoginEmail} onChange={this._handleChange}/>
                 <span className="vd" id="spnLoginEmailErrorMessage"></span>
                 </div>
+
                 <div className="form-group logg-continue">
-                    
                 <input type="button" className="btn_yellow" value="Continue" id="btnemail"/>
                 </div>
-                <form onSubmit={this.userLoginWithCheckLogin}>
 
-                <div className="form-group pswd-btn">
-                <div className="vd" id="phn1"></div>
-                
-                <label>Password</label>
-                <input type="password" placeholder="Enter Password" id="txtLoginPassword" spellcheck="false" maxlength="25" className="s-txt"   value={this.state.txtLoginPassword} onChange={this._handleChange}/>
-                <span className="vd" id="spnLoginPasswordErrorMessage"></span>
+                <div class="form-group pswd-btn">
+                    <div class="vd" id="phn1"></div>
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter Password" id="txtLoginPassword" spellcheck="false" maxlength="25" class="s-txt"  value={this.state.txtLoginPassword} onChange={this._handleChange}/>
+                    <span class="vd" id="spnLoginPasswordErrorMessage"></span>
                 </div>
                 <div className="form-group pswd-btn">
                 <input id="btnUserLoginWithCheckLogin" type="button" className="btn_yellow" value="Continue"/>
@@ -641,8 +661,34 @@ render() {
                 </form>
                 </div>
                 
+
                 <div className="new-account">New user? <a href="#" className="signup-show">Create an account</a></div>
+                
                 </div>
+                </div>
+                <div className="login_top_open" id="login_top_open1">
+                    <div id="forgot" className="log_box_top" style={{display:"none"}}>
+                        <div id="fb-root"></div>
+                        <label>Email</label>
+                        <input type="email" placeholder="Enter Email" id="txtforgotemail" onchange="checkmail2(this.value);" spellcheck="false"/>
+                        <div className="clearfix"></div>
+                        <div style={{color:"red"}} id="phnn"></div>
+                        <input type="button" className="btn_yellow" value="Back" onClick="showuser('Login')" style={{width:"48%"}}/>
+                        <input type="button" className="btn_yellow pull-right" value="Submit" onClick="CheckForgot()" style={{width:"48%"}}/>
+                        <div className="clearfix"></div>
+                    </div>
+                </div>
+                <div className="login_top_open" id="myaccount_open">
+                    <div id="logindata" className="menu_box_top" style={{display:"block"}}>
+                        <ul className="">
+                            <li><a href="/common/myprofile">My Profile</a></li>
+                            <li><a href="/common/myprofile">My Bookings</a></li>
+                            <li><a href="/reviews">Reviews</a></li>
+                            <li><a href="/faq">FAQ</a></li>
+                            <li><a onClick="logout()">Sign out</a></li>
+                        </ul>
+                        <div className="clearfix"></div>
+                    </div>
                 </div>
 
             </div>

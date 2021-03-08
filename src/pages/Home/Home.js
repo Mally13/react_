@@ -14,6 +14,7 @@ class Home extends Component {
     
     return (  
       <div>
+        
         <Tabs defaultActiveKey="flights" id="noanim-tab-example">
         <Tab eventKey="flights" title="Flights">
           

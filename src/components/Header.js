@@ -78,30 +78,7 @@ handleScroll=() => {
                <Signin_up/>
                 
                 
-                <div className="login_top_open" id="login_top_open1">
-                    <div id="forgot" className="log_box_top" style={{display:"none"}}>
-                        <div id="fb-root"></div>
-                        <label>Email</label>
-                        <input type="email" placeholder="Enter Email" id="txtforgotemail" onchange="checkmail2(this.value);" spellcheck="false"/>
-                        <div className="clearfix"></div>
-                        <div style={{color:"red"}} id="phnn"></div>
-                        <input type="button" className="btn_yellow" value="Back" onClick="showuser('Login')" style={{width:"48%"}}/>
-                        <input type="button" className="btn_yellow pull-right" value="Submit" onClick="CheckForgot()" style={{width:"48%"}}/>
-                        <div className="clearfix"></div>
-                    </div>
-                </div>
-                <div className="login_top_open" id="myaccount_open">
-                    <div id="logindata" className="menu_box_top" style={{display:"block"}}>
-                        <ul className="">
-                            <li><a href="/common/myprofile">My Profile</a></li>
-                            <li><a href="/common/myprofile">My Bookings</a></li>
-                            <li><a href="/reviews">Reviews</a></li>
-                            <li><a href="/faq">FAQ</a></li>
-                            <li><a onClick="logout()">Sign out</a></li>
-                        </ul>
-                        <div className="clearfix"></div>
-                    </div>
-                </div>
+
                 </li>
 
                     <li className="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block">
