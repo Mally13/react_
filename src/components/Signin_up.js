@@ -7,6 +7,7 @@ import 'react-intl-tel-input/dist/main.css';
 import 'react-intl-tel-input/dist/components/utils';
 import axios from 'axios'
 import './Header.css';
+import { NavItem } from 'react-bootstrap';
 
 const encodedToken = 'YWRtaW46OWYwZDgxYjE3NDIzOTdkNGMxMTNmNDRlMTM2NmE5OGM='; //Buffer.from(token).toString('base64');
 const signup_url = 'https://demo.fybomidetravel.com/fybomide-31353973c9/api/users/signup.php';
@@ -26,7 +27,8 @@ class Signin_up extends Component {
             number:'',
             ddlGender: '',
             txtUserRegistrationDOB: '',
-            txtpassword: ''  ,      
+            txtpassword: '', 
+            checked:''     
           };
           
           this.registerUserWithCheckvalidate = this.registerUserWithCheckvalidate.bind(this);
@@ -118,13 +120,13 @@ $(".log-toggle").click(function () {
     $(".title-tab a").removeClass("ttab-active");
     $(this).addClass("ttab-active");
   });
-  $("#isCorporate").on('change', function() {
-    if ($(this).is(':checked')) {
-      $(this).attr('value', 'true');
-    } else {
-      $(this).attr('value', 'false');
-    }
-});
+//   $("#isCorporate").on('change', function() {
+//     if ($(this).is(':checked')) {
+//       $(this).attr('value', 'true');
+//     } else {
+//       $(this).attr('value', 'false');
+//     }
+// });
 
 // this.resetCreateAccount();
 // this.resetUserLogin();
@@ -141,7 +143,10 @@ $(".log-toggle").click(function () {
       [e.target.name]: value
     });
   }
-
+  handlecheckboxChange=(e)=>{
+      const {checked}=e.target
+      this.setState({checked:checked})
+  }
 
 registerUserWithCheckvalidate=(e)=> {
 var _=this;
@@ -250,7 +255,7 @@ var _=this;
     'password':_.state.txtpassword,
     'gender':_.state.ddlGender,
     'dob':_.state.txtUserRegistrationDOB,
-   'isCorporate':_.state.isCorporate
+   'isCorporate':_.state.checked.toString()
 
         }
         console.log(model)
@@ -266,7 +271,7 @@ var _=this;
     regformData.append('password',_.state.txtpassword);
     regformData.append('gender',_.state.ddlGender)
     regformData.append('dob',_.state.txtUserRegistrationDOB)
-    regformData.append('isCorporate',$("#isCorporate").val())
+    regformData.append('isCorporate', _.state.checked.toString())
     // regformData.append( 'countryCode',_.state.txtPhoneNumber.dialCode)
 
     console.log(regformData);
@@ -277,7 +282,7 @@ var _=this;
         url: signup_url,
         data: regformData,
         headers: { 
-            'Authorization': 'Basic '+ encodedToken,
+            'Authorization': `Basic ${encodedToken}`,
             'Content-Type': 'multipart/form-data'
           }
       };
@@ -301,7 +306,7 @@ var _=this;
                     url: signin_url,
                     data: loginformData,
                     headers: { 
-                        'Authorization': 'Basic '+ encodedToken,
+                        'Authorization': `Basic ${encodedToken}`,
                         'Content-Type': 'multipart/form-data'
                       }
                   };
@@ -326,7 +331,7 @@ var _=this;
                 });
             }
             else {
-                alert(response.status);
+                alert(response.status );
             }
         }
         else {
@@ -389,7 +394,7 @@ userLoginWithCheckLogin=()=> {
             url: signin_url,
             data: loginformData,
             headers: { 
-                'Authorization': 'Basic '+ encodedToken,
+                'Authorization': `Basic ${encodedToken}`,
                 'Content-Type': 'multipart/form-data'
               }
           };
@@ -533,7 +538,9 @@ render() {
 
                 <div className="form-group">
                 <label>Service Type</label>
-                <input type="checkbox" className="isCorporate" name="isCorporate" id="isCorporate" value={this.state.isCorporate} onChange={this._handleChange}/> 
+                <input type="checkbox" className="isCorporate" 
+                name="isCorporate" id="isCorporate" onChange={e=>this.handlecheckboxChange(e)} 
+                defaultChecked={this.state.checked}/> 
                 <label className="check_box"style={{width:"90%",float:"right"}}>Please select if you are a corporate</label>
                 <span className="vd" id="spnAgreeErrorMessage"></span>
                 </div>
