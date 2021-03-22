@@ -1,17 +1,41 @@
 import React, { Component } from 'react';
 import Signin_up from './Signin_up'
+import iata from './Certify/iata.pdf'
 import './Header.css';
+import $, { event,click } from "jquery";
+import { NavLink } from 'react-router-dom';
+
+// import  ButtonDropDown  from    "./ButtonDropDown"
+
+// import abta from './Certify/iata.pdf'
+// import iata from './Certify/iata.pdf'
+// import iata from './Certify/iata.pdf'
 
 class Header extends Component {
     constructor(props){
         super(props);
+        this.handleSuccessfulAuth=this.handleSuccessfulAuth.bind(this);
         
     }
 componentDidMount() {
 window.addEventListener("scroll", this.handleScroll);
+
+    
+    $(".navbar-toggler").click(function (e) {
+        if ($("#navbarSupportedContent").is(":visible")) {
+            $("body").css("overflow", "auto");
+        }
+        else { $("body").css("overflow", "hidden"); }
+    });
+
 }
 componentWillUnmount() {
    window.removeEventListener('scroll',this.handleScroll);
+}
+handleSuccessfulAuth(data){
+    //todo  update  parent  component
+    this.props.history.push("/account-settings");
+
 }
 handleScroll=() => {
     var header = document.getElementById("myHeader");
@@ -27,75 +51,95 @@ handleScroll=() => {
     return (
           
         <header className="toppanel" id="myHeader">
-    <div className="container-fluid pad-lr30 pad-lr30-m">
-        <nav className="navbar navbar-expand-lg mb-2">
-            <a className="logo navbar-brand" href="/">
-                <img src="/images/logo-blue1.png" className="img-fluid desklogo"/>
-                <img src="/images/logo-mobile.png" className="mob-logo img-fluid"/>
+    <div class="container-fluid pad-lr30 pad-lr30-m">
+        <nav class="navbar navbar-expand-lg mb-2">
+            <a class="logo navbar-brand" href="/">
+                <img src="images/logo-blue1.png" class="img-fluid desklogo"/>
+                <img src="images/logo-mobile.png" class="mob-logo img-fluid"/>
 
             </a>
 
-            <div className="call-now-m2 d-block d-xl-none d-lg-none top-coc768">
-                <span> <a href="tel:0207 612 0500">  <img src="/images/call-m.png" /> </a></span>
-                <span><a href="/customer-support"><img src="/images/support-m.png" /> </a></span>
+            <div class="call-now-m2 d-block d-xl-none d-lg-none top-coc768">
+                <span> <a href="tel:0207 612 0500">  <img src="images/call-m.png"/> </a></span>
+                <span><a href="/customer-support"><img src="images/support-m.png"/> </a></span>
 
             </div>
-            <button className="navbar-toggler close-menu-hide" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="mobileMenu"></span>
+            <button class="navbar-toggler close-menu-hide" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="mobileMenu"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <div className="mob-show-menu">
-                    <div className="float-left">
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <div class="mob-show-menu">
+                    <div class="float-left">
                         Menu
                     </div>
-                    <div className="float-right close-menu">
-                        <span className="close-btn-icon close-menu"></span>
+                    <div class="float-right close-menu">
+                        <span class="close-btn-icon close-menu"></span>
                     </div>
                 </div>
-                <div className="clearfix"></div>
-                <div className="stick-srch"></div>
+                <div class="clearfix"></div>
+                <div class="stick-srch"></div>
 
 
 
-            <ul className="navbar-nav ml-auto">
-                    <li className="nav-item d-sm-block d-xl-block d-lg-block" >
 
-<ul className="nav navbar-nav navbar-right" style={{display:"block"}}>
-
-                        <li>
-                            <div className="log-toggle sng-btn">
-                                <p className="ls_desk">Login/Signup</p>
-                                <span className="text_sign d-none d-sm-none d-lg-block">
-                                    <span className="sign-icon"></span>
-                                    Log In
-                                    <span id="sign">
-                                        <i className="fa fa-angle-down bar-ioc"></i>
-                                    </span>
-                                </span>
-                            </div>
-                        </li>
-                </ul>
-               <Signin_up/>
-                
-                
-
-                </li>
-
-                    <li className="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block">
-                    <div className="customer-support-top">
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block">
+                    <div class="customer-support-top">
                         <a href="/customer-support">
-                            <img src="/images/Customer-Support-top.png" />
+                            <img src="images/customer-support-top.png"/>
                             <span>Customer support </span>
                         </a>
 
                     </div>
                 </li>
-                    <li className="nav-item dropdown d-block d-xl-none d-lg-none">
-                   
+                <li className="nav-item d-sm-block d-xl-block d-lg-block" >
 
 
-                    </li>
-                    <li className="nav-item dropdown d-block d-xl-none d-lg-none">
+                <ul className="nav navbar-nav navbar-right" >
+
+                        <li>
+                        <div class="dropdown dropleft">
+                        <button className="log-toggle sng-btn "  data-toggle="dropdown">
+                            <p className="ls_desk">Account<i class="fa fa-angle-down bar-ioc" style={{marginLeft:"10px"}}></i></p>
+                            <span className="text_sign d-none d-sm-none d-lg-block">
+                                <span className="sign-icon"></span>
+                                <i class="fa fa-bars" aria-hidden="true" style={{color:"#0d223f",marginLeft:"10px"}}></i>
+
+                                <span id="sign">
+                                <i className="fa fa-angle-down bar-ioc"></i>
+                                </span>
+                            </span>
+                        </button>
+                        <ul className="dropdown-menu"style={{left:"-155px",width:"250px",height:"223px",top:"40px !important"}}>
+            <li>
+                <a  style={{color:"#0d223f !important"}}  href="/sign-up">
+                Sign up
+                </a>
+            </li>
+            <li >
+                <a style={{color:"#0d223f !important"}} href="/sign-in">
+                Log in
+                </a>
+            </li>
+            <hr/>
+            <li>
+                <div>
+                    <a href="tel:+2349087482421">
+                    {/* <img src="/images/call-ioc.png" /> */}
+                    <span>Book Online or <br/>Call us 24/7</span>
+                    <p style={{color:"#0d223f",fontWeight:"600"}}> +2349087482421</p>
+                    </a>
+                </div>            
+
+            </li>
+            
+        </ul>
+                        </div>
+                        </li>
+                        </ul>
+
+                </li>
+                <li className="nav-item dropdown d-block d-xl-none d-lg-none">
                         <a className="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Who We Are
                         </a>
@@ -123,9 +167,8 @@ handleScroll=() => {
                             Important Information
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" target="_blank" href="/Certify/ESTA-Fact-Sheet.pdf">ESTA Fact Sheet</a>
                             <a className="dropdown-item" target="_blank" href="/Certify/ATOL-Certificate.pdf">ATOL Certificate</a>
-                            <a className="dropdown-item" target="_blank" href="/Certify/IATA.pdf">IATA Certificate</a>
+                            <a className="dropdown-item" target="_blank" href={iata}>IATA Certificate</a>
                             <a className="dropdown-item" target="_blank" href="/Certify/ABTA-Certificate.pdf">ABTA Certificate</a>
                             <a rel="nofollow" className="dropdown-item" target="_blank" href="https://www.gov.uk/foreign-travel-advice">
                                 Government Travel Advice</a>
@@ -133,15 +176,12 @@ handleScroll=() => {
                         </div>
                     </li>
 
-                    <li className="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block"> <div className="topSearch"></div> </li>
+                    <li className="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block">
+                         <div className="topSearch"></div>
+                    </li>
 
-                    {/* <li className="nav-item d-none d-sm-none d-md-none d-xl-block d-lg-block">
-                        <div className="call-now">
-                            <img src="/images/call-ioc.png" />
-                            <span>Book Online or Call us 24/7</span>
-                            <p><a href="tel:+2349087482421"><h6> +2349087482421</h6></a></p>
-                        </div>
-                    </li> */}
+                  
+              
                 </ul>
             </div>
         </nav>

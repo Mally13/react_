@@ -1,0 +1,11 @@
+.customersup  .nav-tabs .nav-link.active {
+    color: #02b7a4  !important;
+    background-color: #0d223f   !important;
+    border-color: #02b7a4 #02b7a4 #02b7a4   !important;
+    border-bottom: 3px solid    #02b7a4  !important; ;
+}
+.cust-sup-new-tab-container .nav {
+    border: 1px solid #d7d7d7;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.418);
+}

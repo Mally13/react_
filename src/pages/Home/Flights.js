@@ -1,9 +1,123 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from "axios";
 import './Home.css';
-class Flights extends Component {
- 
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css'; 
+import  moment  from 'moment';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel';
+import $ from 'jquery';
+import OriginSuggestions from './OriginSuggestions';
+import DestSuggestions from './DestSuggestions';
 
+import 'jquery-ui'
+import 'jquery-ui-bundle'
+import 'jquery-ui-bundle/jquery-ui.min.css'
+
+
+const encodedToken = 'YWRtaW46OWYwZDgxYjE3NDIzOTdkNGMxMTNmNDRlMTM2NmE5OGM='; //Buffer.from(token).toString('base64');
+const airports_url='https://demo.fybomidetravel.com/fybomide-31353973c9/api/air/search.php'
+const search_url = 'https://demo.fybomidetravel.com/fybomide-31353973c9/api/air/flightsearch.php';
+
+
+class Flights extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            originQuery: '',
+            destQuery: '',
+            results: [],
+            originLoaded:false,
+            destLoaded:false
+
+            
+        }
+        this.handleDestChange = this.handleDestChange.bind(this);
+        this.handleOriginChange = this.handleOriginChange.bind(this);
+
+        // this.ShowRecentSearch = this.ShowRecentSearch.bind(this);
+        // this.resultbyrecentSearch = this.resultbyrecentSearch.bind(this);
+        // this.resultbyrecentSearch = this.resultbyrecentSearch.bind(this);
+
+    }
+componentDidMount(){
+    $(document).scroll(function () {
+        var y = $(this).scrollTop();
+        if (y > 50) {
+            $('.topSearch').fadeIn();
+        } else {
+            $('.topSearch').fadeOut();
+        }
+
+    
+    });
+        $('.topSearch').on('click', function () {
+            $('#txtOrigin').focus();
+    
+        });
+
+        $(document).ready(function(){
+            $('.owl-carousel').owlCarousel();
+          });
+        }
+        
+
+        getOriginInfo = () => {
+            const  AuthString=`Basic ${encodedToken}`
+            axios.get(`${airports_url}?search=${this.state.originQuery}`,{'headers':{'Authorization':AuthString}})
+              .then(({ data }) => {
+                this.setState({
+                  originresults: data.data,
+                  originLoaded:true,
+                  destLoaded:false
+                })
+              })
+          }
+          getDestInfo = () => {
+            const  AuthString=`Basic ${encodedToken}`
+            axios.get(`${airports_url}?search=${this.state.destQuery}`,{'headers':{'Authorization':AuthString}})
+              .then(({ data }) => {
+                this.setState({
+                  destresults: data.data,
+                  destLoaded:true,
+                  originLoaded:false
+                })
+              })
+          }
+        handleOriginChange = () => {
+            this.setState({
+              originQuery: this.originsearch.value,
+              originLoaded:false,
+              destLoaded:false
+            }, () => {
+                if (this.state.originQuery && this.state.originQuery.length > 1) {
+                  if (this.state.originQuery.length % 2 === 0) {
+                    this.getOriginInfo()
+                  }
+                }
+                  else if (!this.state.originQuery) {
+                }
+            })
+          }
+        
+        handleDestChange = () => {
+            this.setState({
+              destQuery: this.destsearch.value,
+              destLoaded:false,
+              originLoaded:false
+            }, () => {
+                if (this.state.destQuery && this.state.destQuery.length > 1) {
+                  if (this.state.destQuery.length % 2 === 0) {
+                    this.getDestInfo()
+                  }
+                }
+                  else if (!this.state.destQuery) {
+                }
+            })
+          }
+        
+    
     render() {
         return (
             <div>
@@ -15,7 +129,7 @@ class Flights extends Component {
 <img src="images/main-banner-bg.jpg" className="img-fluid bg-img-non-mob bg-mob-top-main" style={{width:"100%", height:"680px"}}/>
 </div>
 
-<form method="post" action="/Flight/SearchEngineFlight">
+<form method="post" onSubmit={this.flightSearch}>
 <div className="d-flex justify-content-center serch-engine myDiv holiday-serch" id="search">
 <div className="container">
     <div className="d-flex justify-content-center">
@@ -34,25 +148,29 @@ class Flights extends Component {
                             <input type="radio" id="rdbOneWay" name="TripType" className="custom-control-input"/>
                             <label className="custom-control-label" for="rdbOneWay"><span> One Way </span></label>
                         </div>
-                        <div className="custom-control custom-radio">
+                        {/* <div className="custom-control custom-radio">
                             <input type="radio" id="multiCity" name="TripType" className="custom-control-input"/>
                             <label className="custom-control-label" for="multiCity"><span> Multi City </span></label>
-                        </div>
+                        </div> */}
                     </div>
                         <div className="wigarde">
+                        <form>
                             <div className="flying-from-1">
                                 <div className="fly-1">
                                     <div className="destname">
                                         <label for="city">
                                             <span>Flying From</span>
-                                            <input type="text" id="txtOrigin" placeholder="City or specific airport" autocomplete="off" /*onkeypress="return IsStringKey(event)" name="Segments[0].Origin" value*//>
+                                            <input type="text" id="txtOrigin" placeholder="City or specific airport" autocomplete="off" onkeypress="return IsStringKey(event)" name="Segments[0].Origin"  ref={input => this.originsearch = input}
+                                                onChange={this.handleOriginChange}/>
+                                            {this.state.originLoaded &&
                                             <div className="autocomplete" id="divO">
-
-                                            </div>
+                                            <OriginSuggestions originresults={this.state.originresults} />
+                                            </div>}
 
 
                                             <p id="pOrigin">
-                                                &nbsp;
+                                            &nbsp;
+                                            {/* {this.state.query} */}
                                             </p>
                                             <input type="hidden" id="hdnOriginCity" name="Segments[0].OriginName" value/>
                                             <input type="hidden" id="hdnOriginAirportName" name="Segments[0].oriText" value/>
@@ -65,13 +183,18 @@ class Flights extends Component {
                                     <div className="destname-1">
                                         <label for="city">
                                             <span>Flying To</span>
-                                            <input type="text" id="txtDestination" placeholder="City or specific airport" autocomplete="off"/* onkeypress="return IsStringKey(event)" name="Segments[0].Destination" value*//>
+                                            <input type="text" id="txtDestination" placeholder="City or specific airport" autocomplete="off"    onkeypress="return IsStringKey(event)" name="Segments[0].Destination"
+                                            ref={input => this.destsearch= input}
+                                            onChange={this.handleDestChange}/>
 
+                                            {this.state.destLoaded &&
                                             <div className="autocomplete" id="divD">
-
+                                            <DestSuggestions destresults={this.state.destresults} />
                                             </div>
+}
                                             <p id="pDestination">
-                                                &nbsp;
+                                            &nbsp;
+                                            {/* {this.state.query} */}
                                             </p>
                                             <input type="hidden" id="hdnDesCity" name="Segments[0].destinationName" value/>
                                             <input type="hidden" id="hdnDesAirportName" name="Segments[0].disText" value/>
@@ -86,7 +209,7 @@ class Flights extends Component {
                                         <label for="Depart Date">
                                             
                                             <span>Depart Date <i className="fa fa-angle-down"></i></span>
-                                            <input type="hidden" id="hdnDepartDate" /*value="02/21/2021" name="Segments[0].Date"*//>
+                                            <input type="hidden" id="hdnDepartDate" value="02/21/2021" name="Segments[0].Date"/>
                                             <strong>
                                                     <span className="date-serach" id="dptDt">21</span>
                                                     <span className="month-serach" id="dptMnth">Feb</span>&#x27;                                                            <span className="year-serach" id="dptYr">21</span>
@@ -107,7 +230,7 @@ class Flights extends Component {
                                             Add Return<br/> To Save More
                                         </div>
                                         <div id="divreturndate">
-                                            <input type="hidden" id="hdnReturnDate" /*value="02/22/2021" name="Segments[1].Date"*//>
+                                            <input type="hidden" id="hdnReturnDate" value="02/22/2021" name="Segments[1].Date"/>
                                             <strong>
                                                     <span className="date-serach" id="rtrnDt">22</span>
                                                     <span className="month-serach" id="rtrnMnth">Feb</span>&#x27;                                                            <span className="year-serach" id="rtrnYr">21</span>
@@ -136,10 +259,10 @@ class Flights extends Component {
 
                         </div>
                         <div className="flying-from-4">
-                            <input className="serch-botton" type="submit" /*onClick={searchReq(Event)}*/  value/>
+                            <input className="serch-botton" type="submit" /*onClick={searchReq(Event)}*/value/>
                             <input type="hidden" name="hdnSearchRequest" id="hdnSearchRequest"/>                                    
                         </div>
-
+                        </form>
                         <div className="travlerr-data" id="DivTravelPopData" style={{display:"none"}}>
 
                             <div className="mob-show">
@@ -254,7 +377,7 @@ class Flights extends Component {
 <input name="__RequestVerificationToken" type="hidden" value="CfDJ8CYv6_8YqkxPqsw2-T5-nrYODUQBailW43NxjcAn0PD0mh9W05ca5DYG_GDl080GXt1g1-iWlUOU9U7yHSolet9Rb4HpHXnWHwkas6kcjTSiJI4JK8UbNLpr8UWPcKNfIXaMZMly-Si_vxZ7bWAAUrQ"/>
 </form>
 
-<script src="js/autocomplete_v%3DBCkDTvHh0zwR_AEikGCf9WX408wPMeU9JAhNYp26evA.js"></script>
+{/* <script src="js/autocomplete_v%3DBCkDTvHh0zwR_AEikGCf9WX408wPMeU9JAhNYp26evA.js"></script> */}
 
 
 </div>
@@ -292,100 +415,101 @@ class Flights extends Component {
 </div>
 
 </section>
-<section className="customer-support">
-<div className="container">
-<div className="customer-support-line support-space">
-    <div className="row">
-        <div id="customer-support" className="owl-carousel owl-theme pt-3 pb-4 cutomer">
-            <div className="item">
-                <div className="media">
-                    <span className="mr-3 easy-installments-icon"></span>
-                    <div className="media-body">
-                        <h5 className="mt-0">
-                            24/7 Customer Support
-                        </h5>
-                        Our travel experts provide quality service whenever you need it
-                    </div>
-                </div>
-            </div>
-            <div className="item">
-                <div className="media">
-                    <span className="mr-3 customer-support-icon"></span>
-                    <div className="media-body">
-                        <h5 className="mt-0"> Price Match Promise</h5>
-                        We offer the best rates for your flights around the world
-                    </div>
-                </div>
-            </div>
-            <div className="item">
-                <div className="media">
-                    <span className="mr-3 price-match-icon"></span>
-                    <div className="media-body">
-                        <h5 className="mt-0">Same Day Cancellation</h5>
-                        No hassle, no extra costs. Cancellations made easy.
-                    </div>
-                </div>
-            </div>
-            <div className="item">
-                <div className="media">
-                    <span className="mr-3 free-cancellations-icon"></span>
-                    <div className="media-body">
-                        <h5 className="mt-0"> Fly Now Pay Later</h5>
-                        Budgeting is made easy with our fly now pay later option
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-{/* modal Start */}
-<div className="modal fade" id="myModal">
-<div className="modal-dialog modal-xl">
-    <div className="modal-content">
-        <div className="modal-body">
-            <button type="button" className="close" data-dismiss="modal">&times;</button>
-            <div className="row">
-                <div className="col-xl-4 col-lg-6 col-md-12 col-12">
-                    <p>Why Sign Up for Our Newsletter?</p>
-                    <ul>
-                        <li>
-                            Email-only deals delivered right to you
-                        </li>
-                        <li>Discounted deals from hundreds of airlines</li>
-                        <li>Special promo codes & discounts</li>
-                    </ul>
-                </div>
-                <div className="col-xl-2 col-lg-6 col-md-12 col-12">
-                    <img src="images/sound-icon.jpg"/>
-                </div>
-                <div className="col-xl-6 col-lg-12 col-md-12 col-12">
-                    <p>Get Promo Code and Get up to £15 OFF.</p>
-                    <strong>Sign up for Fybomide Travel emails below to reveal a promo code you can use today.</strong>
-                    <div className="input-group mt-2">
-                        <input type="text" className="form-control" placeholder="Enter your email and get discounted deals"/>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">Sign Up & Get Promo Code!</span>
+<section class="customer-support">
+    <div class="container">
+        <div class="customer-support-line support-space">
+            <div class="row">
+                <div id="customer-support" class="owl-carousel owl-theme pt-3 pb-4 cutomer">
+                    <div class="item">
+                        <div class="media">
+                            <span class="mr-3 easy-installments-icon"></span>
+                            <div class="media-body">
+                                <h5 class="mt-0">
+                                    24/7 Customer Support
+                                </h5>
+                                Our travel experts provide quality service whenever you need it
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="col-12">
-                    <hr/>
-                </div>
-                <div className="col-12">
-                    <div className="text-small text-center">Applies to bookings for 3+ travellers.  <strong>Book by 30 Apr, 2020</strong>  <a href>Learn more</a></div>
-                </div>
+                    <div class="item">
+                        <div class="media">
+                            <span class="mr-3 customer-support-icon"></span>
+                            <div class="media-body">
+                                <h5 class="mt-0"> Price Match Promise</h5>
+                                We offer the best rates for your flights around the world
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="media">
+                            <span class="mr-3 price-match-icon"></span>
+                            <div class="media-body">
+                                <h5 class="mt-0">Same Day Cancellation</h5>
+                                No hassle, no extra costs. Cancellations made easy.
+                            </div>
+                        </div>
+                    </div>
+                        <div class="item">
+                            <div class="media">
+                                <span class="mr-3 free-cancellations-icon"></span>
+                                <div class="media-body">
+                                    <h5 class="mt-0"> Fly Now Pay Later</h5>
+                                    Budgeting is made easy with our fly now pay later option
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
-
-
         </div>
     </div>
-</div>
+    {/* <!-- modal Start--> */}
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-6 col-md-12 col-12">
+                            <p>Why Sign Up for Our Newsletter?</p>
+                            <ul>
+                                <li>
+                                    Email-only deals delivered right to you
+                                </li>
+                                <li>Discounted deals from hundreds of airlines</li>
+                                <li>Special promo codes & discounts</li>
+                            </ul>
+                        </div>
+                        <div class="col-xl-2 col-lg-6 col-md-12 col-12">
+                            <img src="images/sound-icon.jpg"/>
+                        </div>
+                        <div class="col-xl-6 col-lg-12 col-md-12 col-12">
+                            <p>Get Promo Code and Get up to £15 OFF.</p>
+                            <strong>Sign up for Crystal Travel emails below to reveal a promo code you can use today.</strong>
+                            <div class="input-group mt-2">
+                                <input type="text" class="form-control" placeholder="Enter your email and get discounted deals"/>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2">Sign Up & Get Promo Code!</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <hr/>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-small text-center">Applies to bookings for 3+ travellers.  <strong>Book by 30 Apr, 2020</strong>  <a href>Learn more</a></div>
+                        </div>
+                    </div>
 
 
-</div>
-{/* modal End*/}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    {/* modal End--> */}
 </section>
+
 <section id="cheapflight" className="flight-routes">
 
 

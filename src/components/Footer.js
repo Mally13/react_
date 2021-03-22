@@ -16,8 +16,8 @@ class Footer extends Component {
                     <div className="col-xl-8 col-lg-9 col-md-12 col-sm-12 align-self-center">
                         <div className="location">
                             <i className="fa fa-map-marker" aria-hidden="true"></i> 10-11 Percy St, Fitzrovia, London W1T 1DN, United Kingdom <span>
-                                <a href="tel:+2349087482421">
-                                    <img src="images/call-ioc.png" className="img-fluid" alt="call"/> +2349087482421
+                                <a href="tel:+2349087482421" style={{color:"#0d223f !important"}} >
+                                    <img src="images/call-ioc.png" className="img-fluid" alt="call"/>+2349087482421
                                 </a>
                             </span>
                         </div>

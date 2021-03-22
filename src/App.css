@@ -6,33 +6,87 @@
   height: 40vmin;
   pointer-events: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  font-family: Roboto, sans-serif;
+  background: #f2f2f2;
+  color: #757575;
+  margin: 0px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+main {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.flex-column {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
+
+
+/* Confirm */ 
+.confirm a {
+  color: #6279AB;
+  font: inherit;
+  text-decoration: none;
+}
+
+.confirm a:hover {
+  color: #334f8d;
+}
+
+/* Toast Overide */
+.toast-notification{
+  box-shadow: 5px rgba(33, 62, 65, 0.1);
+  border-radius: 3px;;
+  background: #06cabd;
+  /* opacity: 0.5; */
+  font: inherit;
+  z-index: 9999;
+  color: #fff;
+  cursor: pointer;
+  position: fixed;
+  /* transform:translate(-50%,0px) ; */
+}
+
+/* Animations */
+.fadein {
+  animation: fadein 2s;
+}
+
+@keyframes fadein {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
-} */
+}
+
+.spinning {
+  animation: spin 1.5s infinite linear;
+}
+
+.spinning svg {
+  border-radius: 50%
+}
+
+@keyframes spin {
+  0%  {
+    -webkit-transform: rotate(0deg)
+  }
+  100% {
+    -webkit-transform: rotate(360deg)
+  }   
+} 
